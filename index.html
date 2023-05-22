@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Les Petits Plats</title>
+    <link rel="stylesheet" href="css/index.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <a href="#"><img src="images/logo.png" alt="logo du site Les Petits Plats"></a>
+    </header>
+    <main>
+        <form class="search-bar"> <!--  barre de Recherche -->
+            <input type="text" class="search-input" placeholder="Rechercher une recette">
+            <img class="search-button" src="images/loupe.png" alt="loupe">
+        </form>
+        <section class="tag-list">
+            <!-- affichage des tags -->
+        </section>
+        <section class="filter-menu">
+            <div class="filter-item" >
+                <input type="button" value="Ingredients" id="ingredients">
+                <i class="fa-solid fa-chevron-up" id="hide-ingredients"></i>
+                <i class="fa-solid fa-chevron-down" id="show-ingredients"></i>
+             
+                
+            </div>
+            <div class="filter-item" >
+                <input type="button" value="Appareils" id="Appareils">
+                <i class="fa-solid fa-chevron-up" id="hide-Appareils"></i>
+                <i class="fa-solid fa-chevron-down" id="show-Appareils"></i>
+            </div>
+            <div class="filter-item" >
+                <input type="button" value="Ustensils" id="Ustensils">
+                <i class="fa-solid fa-chevron-up" id="hide-Ustensils"></i>
+                <i class="fa-solid fa-chevron-down" id="show-Ustensils"></i>
+            </div>
+            
+        </section>
+        <section class="show-recipes"> 
+            <!-- affichage des recettes -->
+        </section>
+
+    </main>
+
+    <script src="js/index.js" type="module"></script>
+    <script src="js/recipes.js" type="module"></script>
+   
+</body>
+</html>
