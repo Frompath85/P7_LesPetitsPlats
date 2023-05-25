@@ -1727,18 +1727,5 @@ const recipes = [
 
 export default recipes;
 
-//créer un tableau de tous les ingredients 
-const AllIngredients = [];
-recipes.forEach(recette =>{
-    //console.log(recette.ingredients)
-    // creer un tableau qui contients tous les noms d'ingredients d'une recette
-    const IngredientsOneRecipe = recette.ingredients.map(ele => ele.ingredient)
-   // console.log(IngredientsOneRecipe)
-    //pour chaque element du ArrayIngredientsOneRecipe je remplie un autre tableau contient tous les ingredients
-    IngredientsOneRecipe.map(ele => AllIngredients.push(ele))
-})
-//console.log(AllIngredients)
-// eliminer les ingredients en double
- const AllIngredientsNoRepeat = new Set(AllIngredients)
- console.log( AllIngredientsNoRepeat)
+
  
