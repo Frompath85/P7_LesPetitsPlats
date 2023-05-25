@@ -41,37 +41,73 @@ header img{
     padding: 5px;
 }
 .filter-item{  
-    position: relative;
+    display: flex;
+    flex-direction: column;  
+}
+.ingredients-btn-div{
+    display: flex;
+    position:relative;
+    background-color: #3282F7;
+    border-radius: 5px; 
+}
+.appareils-btn-div{
+    display: flex;
+    position:relative;
+    background-color: #68D9A4;
+    border-radius: 5px; 
+}
+.Ustensils-btn-div{
+    display: flex;
+    position:relative;
+    background-color: #ED6454;
+    border-radius: 5px; 
 }
 .filter-item input{
     font-size: 18px;
     padding: 18px 10px;
-    width: 200px;
+    width: 150px;
     text-align: left;
     border: none;
     border-radius: 5px;
     color: white;
 }
 
+.liste-tag{
+    display: none;
+    grid-template-columns: repeat(3, 1fr);
+    padding-left: 0px;
+    width: auto;
+    margin: 0px;
+    border-radius: 0px 0px 5px 5px;
+    color: white;
+    max-height: 300px;
+    overflow-y: auto;
+}
+.liste-tag li{
+    padding: 5px 8px;
+    list-style-type: none;
+}
 .fa-solid{
     position: absolute;
     right: 15px;
     top: 21px;
     color: white;
+    cursor: pointer;
 }
+
 #hide-ingredients, #hide-Appareils, #hide-Ustensils{
     display: none;
 }
 #show-ingredients, #show-Appareils, #show-Ustensils{
     display: block;
 }
-#ingredients{
-    background-color: #3282F7;
-}
-#Appareils{
+#ingredients, #ingredients-tag{
+   background-color: #3282F7;
+} 
+#Appareils, #appareils-tag{
     background-color: #68D9A4;
 }
-#Ustensils{
+#Ustensils, #ustensils-tag{
     background-color: #ED6454;
 }
 .show-recipes{
