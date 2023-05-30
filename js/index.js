@@ -1,74 +1,87 @@
 import recipes from '../data/recipes.js';
 
+let AllRecipes = recipes;
+let AllIngredients = [];
+let AllAppareils = [];
+let AllUstensiles = [];
 
-//créer un tableau de tous les ingredients 
-const Ingredients = [];
-recipes.forEach(recette =>{
-    //console.log(recette.ingredients)
-    // creer un tableau qui contients tous les noms d'ingredients d'une recette
-    const IngredientsOneRecipe = recette.ingredients.map(ele => ele.ingredient);
-    //console.log(IngredientsOneRecipe)
-   // IngredientsOneRecipe.forEach(el => el = el.toLowerCase())
-    //pour chaque element du ArrayIngredientsOneRecipe je remplie un autre tableau contient tous les ingredients
-    IngredientsOneRecipe.map(ele => Ingredients.push(ele.toLowerCase()))
-})
-//console.log(Ingredients) //254 ingredients
-// eliminer les ingredients en double
-const AllIngredients = [...new Set(Ingredients)];
- //const IngredientsNoRepeat = Ingredients.filter((ele,pos)=>Ingredients.indexOf(ele)==pos)
-//console.log(AllIngredients )// 127 ingredients
+const HideIngredients = document.getElementById('hide-ingredients')//up
+const ShowIngredients = document.getElementById('show-ingredients')//down
+const ListeTagIngredients = document.querySelector('#ingredients-liste')//la liste des ingredients
+
+const ButtonTagIngredients = document.querySelector('.ingredients-btn-container')
+const InputIngredient = document.querySelector("#ingredients")
 
 
-// recuperer tous les Appareils
-const Appareils=[];
-recipes.forEach(recette => {
-    Appareils.push(recette.appliance.toLowerCase());  
-});
-//console.log(Appareils);
-const AllAppareils = [... new Set (Appareils)]
-//console.log(AllAppareils )
+const HideAppareils = document.getElementById('hide-Appareils')//up
+const ShowAppareils = document.getElementById('show-Appareils')//down
+const ListeTagAppareils = document.querySelector('#appareils-liste')//la liste des appareils
+const ButtonTagAppareils = document.querySelector('.appareils-btn-container')
+const InputAppareils = document.querySelector("#Appareils")
 
 
-// recuperer tous les Ustensils
-const Ustensils =[]
-recipes.forEach(recette => {
-    const OneUstensils = recette.ustensils;
-    OneUstensils.map(ele => Ustensils.push(ele.toLowerCase()))
-});
-//console.log(Ustensils);//122
-const AllUstensils = [...new Set(Ustensils)]
-//console.log(AllUstensils);//30
-
+const Hideustensiles = document.getElementById('hide-ustensiles')//up
+const Showustensiles = document.getElementById('show-ustensiles')//down
+const ListeTagustensiles = document.querySelector('#ustensiles-liste')//la liste des ustensiles
+const ButtonTagustensiles = document.querySelector('.ustensiles-btn-container')
+const Inputustensiles = document.querySelector("#ustensiles")
 
 const SearchInput = document.querySelector('.search-input');
-SearchInput.addEventListener('keyup',(e)=>{
-    const InputWord = e.target.value;// récuperer le mot saisie 
-    if(InputWord.length > 2)  // au moins 3 caractères
-      console.log(InputWord);
-      //RecipeFilter(InputWord); creer une foction qui filtre les recette selon la recherche
-})
-//console.log(recipes)
-const ShowRecipes = document.querySelector('.show-recipes')
-recipes.forEach(recp =>{
-    //console.log(rec)
+const RecipesContainer = document.querySelector('.recipes-container');
+
+//initialisation de tous les tableaux
+
+//récupérer tous les ingrédients 
+function GetAllIngredients(RecipeList){
+    const Ingredients = [];
+    RecipeList.forEach(recette =>{
+        //recupérer tous les ingredients d'une seule recette
+        const IngredientsOneRecipe = recette.ingredients.map(ele => ele.ingredient);
+        //pour chaque element du ArrayIngredientsOneRecipe je remplie un autre tableau contient tous les ingredients
+        IngredientsOneRecipe.map(ele => Ingredients.push(ele.toLowerCase())) 
+    })
+    return [...new Set(Ingredients)];
+}
+
+// récupérer tous les Appareils
+function GetAllAppareils(RecipeList){
+    const Appareils = [];
+    RecipeList.forEach(recette => {
+        Appareils.push(recette.appliance.toLowerCase());  
+    });
+    return [... new Set (Appareils)];
+}
+
+// récupérer tous les ustensiles
+function GetAllUstensiles(RecipeList){
+    const Ustensiles = [];
+    RecipeList.forEach(recette => {
+        const OneUstensiles = recette.ustensils;
+        OneUstensiles.map(ele => Ustensiles.push(ele.toLowerCase()))
+    });
+    return [...new Set(Ustensiles)];
+}
+
+// Affichage de tous les recettes
+function DisplayRecipe(recette){
     const CodeRecipe =`<div class="recipe-card">
                         <div class="recipe-image"></div>
                         <div class="recipe-infos">
                             <div class="name-time-recipe">
-                                <h2 class="name-recipe">${recp.name}</h2>
-                                <p class="time-recipe"><img src="images/clock.png" alt="clock time"> ${recp.time} min</p>
+                                <h2 class="name-recipe">${recette.name}</h2>
+                                <p class="time-recipe"><img src="images/clock.png" alt="clock time"> ${recette.time} min</p>
                             </div>
                             <div class="ingred-instr-recipe">
                                 <ul class="ingred-recipe"></ul>
-                                <p class="instr-recipe">${recp.description}</p>
+                                <p class="instr-recipe">${recette.description}</p>
                             </div>
                         </div>
                       </div>`
-    ShowRecipes.insertAdjacentHTML('afterbegin',CodeRecipe);
+    RecipesContainer.insertAdjacentHTML('afterbegin',CodeRecipe);
 
     const IngredRecipe = document.querySelector('.ingred-recipe');
     //console.log(recp.ingredients)
-    recp.ingredients.forEach(ingd =>{ // affiche la liste des ingredients
+    recette.ingredients.forEach(ingd =>{ // affiche la liste des ingredients
         let ListeIngrds = `<li></li>`;
         if(ingd.quantity == undefined) 
             ListeIngrds = `<li>${ingd.ingredient} </li>`
@@ -79,85 +92,106 @@ recipes.forEach(recp =>{
 
         IngredRecipe.insertAdjacentHTML('afterbegin',ListeIngrds)   
     })
+}
+recipes.forEach(recp =>{
+    DisplayRecipe(recp)
 })
 
-const HideIngredients = document.getElementById('hide-ingredients')//up
-const ShowIngredients = document.getElementById('show-ingredients')//down
-const ListeTagIngredients = document.querySelector('#ingredients-tag')//la liste des ingredients
-const LiIngredients = document.querySelectorAll("#ingredients-tag li")
-const ButtonTagIngredients = document.querySelector('.ingredients-btn-div')
-
-const HideAppareils = document.getElementById('hide-Appareils')//up
-const ShowAppareils = document.getElementById('show-Appareils')//down
-const ListeTagAppareils = document.querySelector('#appareils-tag')//la liste des appareils
-const ButtonTagAppareils = document.querySelector('.appareils-btn-div')
-
-const HideUstensils = document.getElementById('hide-Ustensils')//up
-const ShowUstensils = document.getElementById('show-Ustensils')//down
-const ListeTagUstensils = document.querySelector('#ustensils-tag')//la liste des Ustensils
-const ButtonTagUstensils = document.querySelector('.Ustensils-btn-div')
-
-
-//********** Ingredients*/
-ShowIngredients.addEventListener('click',() =>{   
+//********** Afficher les Ingredients*/
+function AfficheListeIngredients(){
     ShowIngredients.style.display="none";
     HideIngredients.style.display="block";
     ListeTagIngredients.style.display="grid";
     ButtonTagIngredients.style.borderRadius = "5px 5px 0px 0px";
-    //affichage de la liste des ingredients 
     ListeTagIngredients.innerHTML="";
-    ShowTagList(AllIngredients, ListeTagIngredients);
+    InputIngredient.value="";
+    InputIngredient.setAttribute("placeholder", "Rechercher un ingredient");
 
+    AllIngredients = GetAllIngredients(AllRecipes)
+    ShowTagList(AllIngredients, ListeTagIngredients);
+}
+InputIngredient.addEventListener('click',() =>{   
+    AfficheListeIngredients();
+})
+ShowIngredients.addEventListener('click',() =>{   
+    AfficheListeIngredients();
 })
 HideIngredients.addEventListener('click',() =>{
     HideIngredients.style.display="none";
     ShowIngredients.style.display='block';
     ListeTagIngredients.style.display="none";
     ButtonTagIngredients.style.borderRadius = "5px";
+    InputIngredient.value="Ingredients";
+    InputIngredient.setAttribute("placeholder", "");
 })
+// selectionner un tag et l'afficher sur la barre des tags
 
-//**********  Appareils */
-ShowAppareils.addEventListener('click',() =>{   
+//********** Afficher les Appareils */
+function  AfficheListeAppareils(){
     ShowAppareils.style.display="none";
     HideAppareils.style.display="block";
     ListeTagAppareils.style.display="grid";
     ButtonTagAppareils.style.borderRadius = "5px 5px 0px 0px";
     ListeTagAppareils.innerHTML="";
+    InputAppareils.value="";
+    InputAppareils.setAttribute("placeholder", "Rechercher un Appareil");
+
+    AllAppareils = GetAllAppareils(AllRecipes) 
     ShowTagList(AllAppareils, ListeTagAppareils);
+}
+InputAppareils.addEventListener('click',() =>{   
+    AfficheListeAppareils();
+})
+ShowAppareils.addEventListener('click',() =>{   
+    AfficheListeAppareils();
 })
 HideAppareils.addEventListener('click',() =>{
     HideAppareils.style.display="none";
     ShowAppareils.style.display='block';
     ListeTagAppareils.style.display="none";
     ButtonTagAppareils.style.borderRadius = "5px";
+    InputAppareils.value="Appareils";
+    InputAppareils.setAttribute("placeholder", "");
 })
 
-//************  Ustensils */
-ShowUstensils.addEventListener('click',() =>{   
-    ShowUstensils.style.display="none";
-    HideUstensils.style.display="block";
-    ListeTagUstensils.style.display="grid";
-    ButtonTagUstensils.style.borderRadius = "5px 5px 0px 0px";
-    ListeTagUstensils.innerHTML="";
-    ShowTagList(AllUstensils, ListeTagUstensils);
+//************ Afficher les ustensiles */
+function  AfficheListeUstensils(){
+    Showustensiles.style.display="none";
+    Hideustensiles.style.display="block";
+    ListeTagustensiles.style.display="grid";
+    ButtonTagustensiles.style.borderRadius = "5px 5px 0px 0px";
+    ListeTagustensiles.innerHTML="";
+    Inputustensiles.value="";
+    Inputustensiles.setAttribute("placeholder", "Rechercher un ustensile");
+
+    AllUstensiles = GetAllUstensiles(AllRecipes);
+    ShowTagList(AllUstensiles, ListeTagustensiles);
+}
+Inputustensiles.addEventListener('click',() =>{   
+    AfficheListeUstensils();
 })
-HideUstensils.addEventListener('click',() =>{
-    HideUstensils.style.display="none";
-    ShowUstensils.style.display='block';
-    ListeTagUstensils.style.display="none";
-    ButtonTagUstensils.style.borderRadius = "5px";
+Showustensiles.addEventListener('click',() =>{   
+    AfficheListeUstensils();
+})
+Hideustensiles.addEventListener('click',() =>{
+    Hideustensiles.style.display="none";
+    Showustensiles.style.display='block';
+    ListeTagustensiles.style.display="none";
+    ButtonTagustensiles.style.borderRadius = "5px";
+    Inputustensiles.value="ustensiles";
+    Inputustensiles.setAttribute("placeholder", "");
 })
 
 function ShowTagList(DataOfTagList, ListTag){
     DataOfTagList.forEach(el =>{
-        const TagList =  `<li>${el}</li>`
+        const TagList =  `<li onclick = ShowTag()>${el}</li>`
         ListTag.insertAdjacentHTML("afterbegin",TagList);
      })
 }
 
-const InputIngredient = document.querySelector("#ingredients")
-InputIngredient.addEventListener("keyup",()=>{
-    const InputSearch = InputIngredient.value;
+
+InputIngredient.addEventListener("keyup",()=>{// filtrer les ingredients
+    const InputSearch = InputIngredient.value.toLowerCase();
     //chercher dans le tableau Allingredients la valeur saisie et retourne un nouveau tableau
     const FiltredIngredients = AllIngredients.filter(el => el.includes(InputSearch))
     //console.log(FiltredIngredients);
@@ -165,29 +199,36 @@ InputIngredient.addEventListener("keyup",()=>{
     ShowTagList(FiltredIngredients, ListeTagIngredients);
 })
 
-const InputAppareils = document.querySelector("#Appareils")
-InputAppareils.addEventListener("keyup",()=>{
-    const InputSearch = InputAppareils.value;
+InputAppareils.addEventListener("keyup",()=>{// filtrer les appareils
+    const InputSearch = InputAppareils.value.toLowerCase();
     const FiltredAppareils = AllAppareils.filter(el => el.includes(InputSearch))
     //console.log(FiltredIngredients);
     ListeTagAppareils.innerHTML="";
     ShowTagList(FiltredAppareils, ListeTagAppareils);
 })
 
-const InputUstensils = document.querySelector("#Ustensils")
-InputUstensils.addEventListener("keyup",()=>{
-    const InputSearch = InputUstensils.value;
-    const FiltredUstensils = AllUstensils.filter(el => el.includes(InputSearch))
+Inputustensiles.addEventListener("keyup",()=>{ // filtrer les ustensils
+    const InputSearch = Inputustensiles.value;
+    const Filtredustensiles = AllUstensiles.filter(el => el.includes(InputSearch))
     //console.log(FiltredIngredients);
-    ListeTagUstensils.innerHTML="";
-    ShowTagList(FiltredUstensils, ListeTagUstensils);
+    ListeTagustensiles.innerHTML="";
+    ShowTagList(Filtredustensiles, ListeTagustensiles);
 })
-InputUstensils.addEventListener("focusin",()=>{
-    InputUstensils.value="";
-    InputUstensils.setAttribute("placeholder", "Rechercher un ustensil");
-})
-InputUstensils.addEventListener("focusout",()=>{
-    InputUstensils.value="Ustensils";
-    console.log("hello");
-    InputUstensils.setAttribute("placeholder", "");
+
+//lancement de la recherche
+SearchInput.addEventListener('keyup',(e)=>{
+    const InputWord = e.target.value.toLowerCase();// récuperer le mot saisie 
+   
+    if(InputWord.length > 2) { // au moins 3 caractères
+      const FiltredRecipe = recipes.filter(ele => ele.name.toLowerCase().includes(InputWord));
+      RecipesContainer.innerHTML="";
+      AllRecipes = FiltredRecipe;
+     // FiltredRecipe.forEach(recette => DisplayRecipe(recette));
+    }
+    else {// sinon remettre tous les recettes affichés
+        RecipesContainer.innerHTML="";
+        AllRecipes = recipes;
+       // recipes.forEach(recp  => DisplayRecipe(recp));
+    }
+    AllRecipes.forEach(recette => DisplayRecipe(recette));
 })
