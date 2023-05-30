@@ -24,44 +24,80 @@
         </form>
         <section class="tag-list">
             <!-- affichage des tags -->
+            <div class="tag-ingredient">
+                    <div>
+                        <p>ingredient 1</p>
+                        <i class="fa-regular fa-circle-xmark"></i>
+                    </div>
+                    <div>
+                        <p>ingredient 2</p>
+                        <i class="fa-regular fa-circle-xmark"></i>
+                    </div>
+                    <div>
+                        <p>ingredient 3</p>
+                        <i class="fa-regular fa-circle-xmark"></i>
+                    </div>
+            </div>
+            <div class="tag-appareil">
+                <div>
+                    <p>appareil 1</p>
+                    <i class="fa-regular fa-circle-xmark"></i>
+                </div>
+                <div>
+                    <p>appareil 2</p>
+                    <i class="fa-regular fa-circle-xmark"></i>
+                </div>
+            </div>
+            <div class="tag-ustensile">
+                <div>
+                    <p>ustensile 1</p>
+                    <i class="fa-regular fa-circle-xmark"></i>
+                </div>
+                <div>
+                    <p>ustensile 2</p>
+                    <i class="fa-regular fa-circle-xmark"></i>
+                </div>
+            </div>
         </section>
         <section class="filter-menu">
             <div class="filter-item" >
-                <div class="ingredients-btn-div">
+                <div class="ingredients-btn-container">
                      <input value="ingredients" id="ingredients">  
                     <i class="fa-solid fa-chevron-up" id="hide-ingredients"></i>
                     <i class="fa-solid fa-chevron-down" id="show-ingredients"></i>  
                 </div>
-                <ul class="liste-tag" id="ingredients-tag">
+                <ul class="liste-tag" id="ingredients-liste">
+                   
                 </ul>    
             </div>
             <div class="filter-item" >
-                <div class="appareils-btn-div">
+                <div class="appareils-btn-container">
                     <input  value="Appareils" id="Appareils"> 
                     <i class="fa-solid fa-chevron-up" id="hide-Appareils"></i>
                     <i class="fa-solid fa-chevron-down" id="show-Appareils"></i>
                 </div> 
-                <ul class="liste-tag" id="appareils-tag">
+                <ul class="liste-tag" id="appareils-liste">
                 </ul>    
             </div>
             <div class="filter-item" >
-                <div class="Ustensils-btn-div">
-                    <input value="Ustensils" id="Ustensils">
-                    <i class="fa-solid fa-chevron-up" id="hide-Ustensils"></i>
-                    <i class="fa-solid fa-chevron-down" id="show-Ustensils"></i>
+                <div class="ustensiles-btn-container">
+                    <input value="ustensiles" id="ustensiles">
+                    <i class="fa-solid fa-chevron-up" id="hide-ustensiles"></i>
+                    <i class="fa-solid fa-chevron-down" id="show-ustensiles"></i>
                 </div>  
-                <ul class="liste-tag" id="ustensils-tag">
+                <ul class="liste-tag" id="ustensiles-liste">
                 </ul>  
             </div>
             
         </section>
-        <section class="show-recipes"> 
+        <section class="recipes-container"> 
             <!-- affichage des recettes -->
         </section>
 
     </main>
 
     <script src="js/index.js" type="module"></script>
-   
+    <script src="js/function.js"></script>
+
 </body>
 </html>
