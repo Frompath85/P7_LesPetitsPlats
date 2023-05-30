@@ -44,19 +44,19 @@ header img{
     display: flex;
     flex-direction: column;  
 }
-.ingredients-btn-div{
+.ingredients-btn-container{
     display: flex;
     position:relative;
     background-color: #3282F7;
     border-radius: 5px; 
 }
-.appareils-btn-div{
+.appareils-btn-container{
     display: flex;
     position:relative;
     background-color: #68D9A4;
     border-radius: 5px; 
 }
-.Ustensils-btn-div{
+.ustensiles-btn-container{
     display: flex;
     position:relative;
     background-color: #ED6454;
@@ -65,11 +65,12 @@ header img{
 .filter-item input{
     font-size: 18px;
     padding: 18px 10px;
-    width: 150px;
+    width: 80%;
     text-align: left;
     border: none;
     border-radius: 5px;
     color: white;
+    background-color: #FFFFFF;
 }
 
 .liste-tag{
@@ -87,6 +88,10 @@ header img{
     padding: 5px 8px;
     list-style-type: none;
 }
+.liste-tag li:hover{
+  text-decoration: underline;
+  cursor: pointer;
+}
 .fa-solid{
     position: absolute;
     right: 15px;
@@ -95,22 +100,22 @@ header img{
     cursor: pointer;
 }
 
-#hide-ingredients, #hide-Appareils, #hide-Ustensils{
+#hide-ingredients, #hide-Appareils, #hide-ustensiles{
     display: none;
 }
-#show-ingredients, #show-Appareils, #show-Ustensils{
+#show-ingredients, #show-Appareils, #show-ustensiles{
     display: block;
 }
-#ingredients, #ingredients-tag{
+#ingredients, #ingredients-liste{
    background-color: #3282F7;
 } 
-#Appareils, #appareils-tag{
+#Appareils, #appareils-liste{
     background-color: #68D9A4;
 }
-#Ustensils, #ustensils-tag{
+#ustensiles, #ustensiles-liste{
     background-color: #ED6454;
 }
-.show-recipes{
+.recipes-container{
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap:25px;
@@ -173,4 +178,57 @@ header img{
     display: -webkit-box;
     -webkit-line-clamp: 7;
     -webkit-box-orient: vertical;
+}
+
+.tag-list{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    padding: 5px;
+}
+.tag-ingredient, .tag-appareil, .tag-ustensile{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+.tag-ingredient div{
+    display: flex;
+    justify-content: space-between;
+    gap: 5px;
+    align-items: center;
+    border-radius: 5px;
+    background-color: #3282F7;
+    height: 37px;
+    width: auto;
+    padding: 5px;
+}
+.tag-appareil div{
+    display: flex;
+    justify-content: space-between;
+    gap: 5px;
+    align-items: center;
+    border-radius: 5px;
+    background-color:#68D9A4;
+    height: 37px;
+    width: auto;
+    padding: 5px;
+}
+.tag-ustensile div{
+    display: flex;
+    justify-content: space-between;
+    gap: 5px;
+    align-items: center;
+    border-radius: 5px;
+    background-color: #ED6454;
+    height: 37px;
+    width: auto;
+    padding: 5px;
+}
+.tag-ingredient p, .tag-appareil p, .tag-ustensile p{
+    color: white;
+    font-size: 14px;
+}
+.fa-circle-xmark{
+    color: white;
+    cursor: pointer;
 }
