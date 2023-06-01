@@ -1,6 +1,7 @@
 import recipes from '../data/recipes.js';
 
 let AllRecipes = recipes;
+
 let AllIngredients = [];
 let AllAppareils = [];
 let AllUstensiles = [];
@@ -108,7 +109,7 @@ function AfficheListeIngredients(){
     InputIngredient.setAttribute("placeholder", "Rechercher un ingredient");
 
     AllIngredients = GetAllIngredients(AllRecipes)
-    ShowTagList(AllIngredients, ListeTagIngredients);
+    DisplayIngredientsTag(AllIngredients, ListeTagIngredients);
 }
 InputIngredient.addEventListener('click',() =>{   
     AfficheListeIngredients();
@@ -137,7 +138,7 @@ function  AfficheListeAppareils(){
     InputAppareils.setAttribute("placeholder", "Rechercher un Appareil");
 
     AllAppareils = GetAllAppareils(AllRecipes) 
-    ShowTagList(AllAppareils, ListeTagAppareils);
+    DisplayAppareilsTag(AllAppareils, ListeTagAppareils);
 }
 InputAppareils.addEventListener('click',() =>{   
     AfficheListeAppareils();
@@ -165,7 +166,7 @@ function  AfficheListeUstensils(){
     Inputustensiles.setAttribute("placeholder", "Rechercher un ustensile");
 
     AllUstensiles = GetAllUstensiles(AllRecipes);
-    ShowTagList(AllUstensiles, ListeTagustensiles);
+    DisplayUstensilsTag(AllUstensiles, ListeTagustensiles);
 }
 Inputustensiles.addEventListener('click',() =>{   
     AfficheListeUstensils();
@@ -182,9 +183,21 @@ Hideustensiles.addEventListener('click',() =>{
     Inputustensiles.setAttribute("placeholder", "");
 })
 
-function ShowTagList(DataOfTagList, ListTag){
+function DisplayIngredientsTag(DataOfTagList, ListTag){
     DataOfTagList.forEach(el =>{
-        const TagList =  `<li onclick = ShowTag()>${el}</li>`
+        const TagList =  `<li onclick = SelectIngredientTag(this)>${el}</li>`
+        ListTag.insertAdjacentHTML("afterbegin",TagList);
+     })
+}
+function DisplayAppareilsTag(DataOfTagList, ListTag){
+    DataOfTagList.forEach(el =>{
+        const TagList =  `<li onclick = SelectAppareilsTag(this)>${el}</li>`
+        ListTag.insertAdjacentHTML("afterbegin",TagList);
+     })
+}
+function DisplayUstensilsTag(DataOfTagList, ListTag){
+    DataOfTagList.forEach(el =>{
+        const TagList =  `<li onclick = SelectUstensilsTag(this)>${el}</li>`
         ListTag.insertAdjacentHTML("afterbegin",TagList);
      })
 }
@@ -215,7 +228,7 @@ Inputustensiles.addEventListener("keyup",()=>{ // filtrer les ustensils
     ShowTagList(Filtredustensiles, ListeTagustensiles);
 })
 
-//lancement de la recherche
+//lancement de la recherche 1- par nom de recette
 SearchInput.addEventListener('keyup',(e)=>{
     const InputWord = e.target.value.toLowerCase();// récuperer le mot saisie 
    
@@ -232,3 +245,10 @@ SearchInput.addEventListener('keyup',(e)=>{
     }
     AllRecipes.forEach(recette => DisplayRecipe(recette));
 })
+
+
+function rechercheParTag(tag){
+    console.log(tag)
+}
+
+module.exports =  rechercheParTag;
