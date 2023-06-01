@@ -6,6 +6,10 @@ let AllIngredients = [];
 let AllAppareils = [];
 let AllUstensiles = [];
 
+const TagArrayIngredients = [];
+const TagArrayAppareils = [];
+const TagArrayUstensils = [];
+
 const HideIngredients = document.getElementById('hide-ingredients')//up
 const ShowIngredients = document.getElementById('show-ingredients')//down
 const ListeTagIngredients = document.querySelector('#ingredients-liste')//la liste des ingredients
@@ -60,10 +64,11 @@ function GetAllUstensiles(RecipeList){
         const OneUstensiles = recette.ustensils;
         OneUstensiles.map(ele => Ustensiles.push(ele.toLowerCase()))
     });
+    //console.log(Ustensiles);
     return [...new Set(Ustensiles)];
 }
 
-// Affichage de tous les recettes
+// récuperer tous les recettes
 function DisplayRecipe(recette){
     const CodeRecipe =`<div class="recipe-card">
                         <div class="recipe-image"></div>
@@ -81,7 +86,7 @@ function DisplayRecipe(recette){
     RecipesContainer.insertAdjacentHTML('afterbegin',CodeRecipe);
 
     const IngredRecipe = document.querySelector('.ingred-recipe');
-    //console.log(recp.ingredients)
+    //console.log(recette.ingredients)
     recette.ingredients.forEach(ingd =>{ // affiche la liste des ingredients
         let ListeIngrds = `<li></li>`;
         if(ingd.quantity == undefined) 
@@ -183,24 +188,158 @@ Hideustensiles.addEventListener('click',() =>{
     Inputustensiles.setAttribute("placeholder", "");
 })
 
+//Affichages des tags Ingredients
 function DisplayIngredientsTag(DataOfTagList, ListTag){
     DataOfTagList.forEach(el =>{
-        const TagList =  `<li onclick = SelectIngredientTag(this)>${el}</li>`
+        const TagList =  `<li class ="ing-li">${el}</li>`
         ListTag.insertAdjacentHTML("afterbegin",TagList);
      })
+     const IngLi = document.querySelectorAll(".ing-li")
+     IngLi.forEach(element => {
+            element.addEventListener("click",(e)=> {
+                SelectIngredientTag(e.currentTarget.innerHTML)
+             })
+     });  
 }
+function  SelectIngredientTag(tag) {
+    if(TagArrayIngredients.some(ele => ele == tag)){ 
+        console.log("ingrédient déja sélectionné");
+    }
+    else{
+        TagArrayIngredients.push(tag);
+        const TagsIngredients = document.querySelector(".tag-ingredient");
+        const codeItemTag = `<div>
+                                <p>${tag}</p>
+                                <i class="fa-regular fa-circle-xmark close-tag-Ing" ></i>
+                             </div>`;
+        TagsIngredients.insertAdjacentHTML('afterbegin',codeItemTag);
+
+        document.querySelector(".close-tag-Ing").
+                addEventListener("click", (e)=> CloseIngredientTag(e.currentTarget))
+
+         FilterRecipeWithIngredientTag(tag);
+    }   
+}
+function FilterRecipeWithIngredientTag(tag){
+    const FiltredIng = GetAllIngredients(AllRecipes);
+    //console.log(FiltredIng);
+   // const FiltredRecipe = AllRecipes.filter(ele => ele.ingredients.toLowerCase().includes(InputWord));
+}
+function CloseIngredientTag(CloseIng){
+    const SelectedIngredient = CloseIng.previousElementSibling.innerHTML;
+    //console.log(SelectedIngredient);
+    const index = TagArrayIngredients.findIndex(ele => ele == SelectedIngredient);
+    //console.log(index);
+    TagArrayIngredients.splice(index, 1);//supprimer l'element du tableau
+    //console.log(TagArrayIngredients);
+    CloseIng.parentNode.remove();//supprimer l'element du tableau TagArrayIngredients
+}
+
+// Affichages des tags appareils
 function DisplayAppareilsTag(DataOfTagList, ListTag){
     DataOfTagList.forEach(el =>{
-        const TagList =  `<li onclick = SelectAppareilsTag(this)>${el}</li>`
+        const TagList =  `<li class = "app-li">${el}</li>`
         ListTag.insertAdjacentHTML("afterbegin",TagList);
      })
+     const AppLi = document.querySelectorAll(".app-li")
+     AppLi.forEach(element => {
+            element.addEventListener("click",(e)=> {
+                SelectAppareilsTag(e.currentTarget.innerHTML)
+             })
+     });  
 }
+function  SelectAppareilsTag(tag) {
+    if(TagArrayAppareils.some(ele => ele == tag)){ 
+        console.log("appareil déja sélectionné");
+    }
+    else{
+        TagArrayAppareils.push(tag);
+        const TagsAppareils = document.querySelector(".tag-appareil");
+        const codeItemTag = `<div>
+                                <p>${tag}</p>
+                                <i class="fa-regular fa-circle-xmark close-tag-App"></i>
+                             </div>`;
+        TagsAppareils.insertAdjacentHTML('afterbegin',codeItemTag);
+
+        document.querySelector(".close-tag-App").
+                addEventListener("click", (e)=> CloseAppareilTag(e.currentTarget))
+
+        FilterRecipeWithAppareilTag(tag);
+    }    
+}
+function FilterRecipeWithAppareilTag(tag){
+    const FiltredRecipe = AllRecipes.filter(ele => ele.appliance.toLowerCase().includes(tag));
+    //console.log(FiltredRecipe);
+    AllRecipes = FiltredRecipe
+    RecipesContainer.innerHTML="";
+    AllRecipes.forEach(recette => DisplayRecipe(recette));
+}
+function CloseAppareilTag(CloseApp){
+    const SelectedAppareil = CloseApp.previousElementSibling.innerHTML;
+    //console.log(SelectedUstensil);
+    const index = TagArrayAppareils.findIndex(ele => ele == SelectedAppareil);
+    //console.log(index);
+    TagArrayAppareils.splice(index, 1);//supprimer l'element du tableau
+    //console.log(TagArrayIngredients);
+    CloseApp.parentNode.remove();//supprimer l'element du tableau TagArrayIngredients
+    // fonction qui met a jour les recette a la suppression de tag
+}
+
+//Affichages des tags Ustensils
 function DisplayUstensilsTag(DataOfTagList, ListTag){
     DataOfTagList.forEach(el =>{
-        const TagList =  `<li onclick = SelectUstensilsTag(this)>${el}</li>`
+        const TagList =  `<li class="ust-li">${el}</li>`
         ListTag.insertAdjacentHTML("afterbegin",TagList);
      })
+     const UstLi = document.querySelectorAll(".ust-li")
+     UstLi.forEach(element => {
+            element.addEventListener("click",(e)=> {
+                SelectUstensilsTag(e.currentTarget.innerHTML)
+             })
+     }); 
 }
+function  SelectUstensilsTag(tag) {
+    if(TagArrayUstensils.some(ele => ele == tag)){ 
+        console.log("Ustensil déja sélectionné");
+    }
+    else{
+        TagArrayUstensils.push(tag);
+        const TagsUstensils = document.querySelector(".tag-ustensile");
+        const codeItemTag = `<div>
+                                <p>${tag}</p>
+                                <i class="fa-regular fa-circle-xmark close-tag-Ust"></i>
+                             </div>`;
+        TagsUstensils.insertAdjacentHTML('afterbegin',codeItemTag);
+
+        document.querySelector(".close-tag-Ust").
+                 addEventListener("click", (e)=> CloseUstensilTag(e.currentTarget))
+
+        FilterRecipeWithUstensilsTag(tag)
+    }    
+}
+function FilterRecipeWithUstensilsTag(tag){
+    const FiltredRecipe =[];
+    // pour chaque recette chercher le tag dans la liste des ustensils
+    AllRecipes.forEach(recp =>{ 
+        if(recp.ustensils.some(ust  => ust == tag)){//si la recette contien l'ustensil selectionné
+            FiltredRecipe.push(recp);
+        }          
+    })
+    AllRecipes = FiltredRecipe;
+    RecipesContainer.innerHTML="";
+    AllRecipes.forEach(recette => DisplayRecipe(recette));   
+}
+function CloseUstensilTag(CloseUst){
+    const SelectedUstensil = CloseUst.previousElementSibling.innerHTML;
+    //console.log(SelectedUstensil);
+    const index = TagArrayUstensils.findIndex(ele => ele == SelectedUstensil);
+    //console.log(index);
+    TagArrayUstensils.splice(index, 1);//supprimer l'element du tableau
+    //console.log(TagArrayIngredients);
+    CloseUst.parentNode.remove();//supprimer l'element du tableau TagArrayIngredients
+    // fonction qui met a jour les recette a la suppression de tag
+}
+
 
 
 InputIngredient.addEventListener("keyup",()=>{// filtrer les ingredients
@@ -209,7 +348,7 @@ InputIngredient.addEventListener("keyup",()=>{// filtrer les ingredients
     const FiltredIngredients = AllIngredients.filter(el => el.includes(InputSearch))
     //console.log(FiltredIngredients);
     ListeTagIngredients.innerHTML="";
-    ShowTagList(FiltredIngredients, ListeTagIngredients);
+    DisplayIngredientsTag(FiltredIngredients, ListeTagIngredients);
 })
 
 InputAppareils.addEventListener("keyup",()=>{// filtrer les appareils
@@ -217,7 +356,7 @@ InputAppareils.addEventListener("keyup",()=>{// filtrer les appareils
     const FiltredAppareils = AllAppareils.filter(el => el.includes(InputSearch))
     //console.log(FiltredIngredients);
     ListeTagAppareils.innerHTML="";
-    ShowTagList(FiltredAppareils, ListeTagAppareils);
+    DisplayAppareilsTag(FiltredAppareils, ListeTagAppareils);
 })
 
 Inputustensiles.addEventListener("keyup",()=>{ // filtrer les ustensils
@@ -225,7 +364,7 @@ Inputustensiles.addEventListener("keyup",()=>{ // filtrer les ustensils
     const Filtredustensiles = AllUstensiles.filter(el => el.includes(InputSearch))
     //console.log(FiltredIngredients);
     ListeTagustensiles.innerHTML="";
-    ShowTagList(Filtredustensiles, ListeTagustensiles);
+    DisplayUstensilsTag(Filtredustensiles, ListeTagustensiles);
 })
 
 //lancement de la recherche 1- par nom de recette
@@ -244,11 +383,5 @@ SearchInput.addEventListener('keyup',(e)=>{
        // recipes.forEach(recp  => DisplayRecipe(recp));
     }
     AllRecipes.forEach(recette => DisplayRecipe(recette));
+  
 })
-
-
-function rechercheParTag(tag){
-    console.log(tag)
-}
-
-module.exports =  rechercheParTag;
