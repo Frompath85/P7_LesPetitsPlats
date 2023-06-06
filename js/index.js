@@ -218,12 +218,35 @@ function  SelectIngredientTag(tag) {
                 addEventListener("click", (e)=> CloseIngredientTag(e.currentTarget))
 
          FilterRecipeWithIngredientTag(tag);
+            //maj tag ingredents
+         AllIngredients = GetAllIngredients(AllRecipes);
+         ListeTagIngredients.innerHTML="";
+         DisplayIngredientsTag(AllIngredients, ListeTagIngredients);
+        // maj tags appareils
+         AllAppareils = GetAllAppareils(AllRecipes);
+        ListeTagAppareils.innerHTML="";
+        DisplayAppareilsTag(AllAppareils, ListeTagAppareils);
+        //maj tag ustensiles
+        AllUstensiles = GetAllUstensiles(AllRecipes);
+        ListeTagustensiles.innerHTML="";
+        DisplayUstensilsTag(AllUstensiles, ListeTagustensiles);
     }   
 }
 function FilterRecipeWithIngredientTag(tag){
-    const FiltredIng = GetAllIngredients(AllRecipes);
-    //console.log(FiltredIng);
-   // const FiltredRecipe = AllRecipes.filter(ele => ele.ingredients.toLowerCase().includes(InputWord));
+    const FiltredRecipe =[];
+    AllRecipes.forEach(recp => {
+        const FiltredIngOneRecipe = recp.ingredients.map(ele => ele.ingredient)
+       
+        //je teste si mon tag est parmi les ingredients de recp
+        if(FiltredIngOneRecipe.some(ing  => ing.toLowerCase() == tag)){
+            FiltredRecipe.push(recp);           
+        }  
+    })
+    //console.log(FiltredRecipe);
+    AllRecipes = FiltredRecipe;
+    RecipesContainer.innerHTML="";
+    AllRecipes.forEach(recette => DisplayRecipe(recette)); 
+   
 }
 function CloseIngredientTag(CloseIng){
     const SelectedIngredient = CloseIng.previousElementSibling.innerHTML;
@@ -265,6 +288,18 @@ function  SelectAppareilsTag(tag) {
                 addEventListener("click", (e)=> CloseAppareilTag(e.currentTarget))
 
         FilterRecipeWithAppareilTag(tag);
+
+        AllAppareils = GetAllAppareils(AllRecipes);
+        ListeTagAppareils.innerHTML="";
+        DisplayAppareilsTag(AllAppareils, ListeTagAppareils);
+
+        AllIngredients = GetAllIngredients(AllRecipes);
+        ListeTagIngredients.innerHTML="";
+        DisplayIngredientsTag(AllIngredients, ListeTagIngredients);
+
+        AllUstensiles = GetAllUstensiles(AllRecipes);
+        ListeTagustensiles.innerHTML="";
+        DisplayUstensilsTag(AllUstensiles, ListeTagustensiles);
     }    
 }
 function FilterRecipeWithAppareilTag(tag){
@@ -313,8 +348,20 @@ function  SelectUstensilsTag(tag) {
 
         document.querySelector(".close-tag-Ust").
                  addEventListener("click", (e)=> CloseUstensilTag(e.currentTarget))
-
+        // filter les recette selon le tag selectionné
         FilterRecipeWithUstensilsTag(tag)
+        // maj la liste des ustensiles selon les recettes filtrés
+        AllUstensiles = GetAllUstensiles(AllRecipes);
+        ListeTagustensiles.innerHTML="";
+        DisplayUstensilsTag(AllUstensiles, ListeTagustensiles);
+        //maj les tag ingredents
+        AllIngredients = GetAllIngredients(AllRecipes);
+        ListeTagIngredients.innerHTML="";
+        DisplayIngredientsTag(AllIngredients, ListeTagIngredients);
+        // maj les tags appareils
+        AllAppareils = GetAllAppareils(AllRecipes);
+        ListeTagAppareils.innerHTML="";
+        DisplayAppareilsTag(AllAppareils, ListeTagAppareils);
     }    
 }
 function FilterRecipeWithUstensilsTag(tag){
