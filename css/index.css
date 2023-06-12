@@ -175,6 +175,7 @@ header img{
     font-size: 12px;
     width: 48%;
     overflow: hidden;
+    overflow-y: auto;
     display: -webkit-box;
     -webkit-line-clamp: 7;
     -webkit-box-orient: vertical;

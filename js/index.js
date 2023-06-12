@@ -448,8 +448,20 @@ SearchInput.addEventListener('keyup',(e)=>{
        // AllRecipes = FilterRecipeWithInputWord(AllRecipes, InputWord);
        AllRecipes = FilterWithRemoveTag(AllRecipes)
     }
-    else {// sinon remettre tous les recettes affichés
+    else {// tester s'il ya des tags sinon remettre tous les recettes affichés
         AllRecipes = recipes;
+        if(TagArrayIngredients.length !=0){
+           // console.log("---- Re filtrage avec liste tag ingredients");
+            AllRecipes = FilterRecipeWithIngredientTag(AllRecipes, TagArrayIngredients);
+        } 
+        if(TagArrayAppareils.length != 0){
+           // console.log("--- Re filtrage avec liste tag appareils");
+            AllRecipes = FilterRecipeWithAppareilTag(AllRecipes,TagArrayAppareils);
+        }
+        if(TagArrayUstensils.length != 0){
+           // console.log("---Re filtrage avec liste tag Ustensiles ");
+            AllRecipes = FilterRecipeWithUstensilsTag(AllRecipes, TagArrayUstensils);
+        }
     }
 
     // Si il y a des tags, afficher les recettes filtrées
@@ -460,11 +472,28 @@ SearchInput.addEventListener('keyup',(e)=>{
 
 function FilterRecipeWithInputWord(ArrayRecipes, KeyWord){
     let FiltredRecipe =[];
-    console.log("****fonction de recherche par input word");
+    let FilteredRecipeWithName =[];
+    let FilteredRecipeWithIngredient =[];
+    let FilteredRecipeWithDescription =[];
 
-    FiltredRecipe = ArrayRecipes.filter(ele => ele.name.toLowerCase().includes(KeyWord));
+    // filter les recettes avec le nom
+    FilteredRecipeWithName = ArrayRecipes.filter(ele => ele.name.toLowerCase().includes(KeyWord));
+    
+    recipes.forEach(recp => {
+    // rechercher dans les ingredients    
+        const IngredientsOneRecipe = recp.ingredients.map(ele => ele.ingredient.toLowerCase());
+        if(IngredientsOneRecipe.includes(KeyWord)){
+            FilteredRecipeWithIngredient.push(recp);
+        }
+    // rechercher dans la description 
+        if(recp.description.includes(KeyWord)){
+            FilteredRecipeWithDescription.push(recp);
+        }
+    })
 
-    return FiltredRecipe;
+    FiltredRecipe = FilteredRecipeWithName.concat(FilteredRecipeWithIngredient).concat(FilteredRecipeWithDescription);
+
+    return [...new Set(FiltredRecipe)];
 }
 
 function ActualiserListTag(){
