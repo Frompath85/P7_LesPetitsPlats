@@ -446,7 +446,7 @@ SearchInput.addEventListener('keyup',(e)=>{
 
     if(InputWord.length > 2) { // au moins 3 caractères 
        // AllRecipes = FilterRecipeWithInputWord(AllRecipes, InputWord);
-       AllRecipes = FilterWithRemoveTag(AllRecipes)
+       AllRecipes = FilterWithRemoveTag(recipes)
     }
     else {// tester s'il ya des tags sinon remettre tous les recettes affichés
         AllRecipes = recipes;
