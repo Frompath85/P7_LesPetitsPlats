@@ -258,28 +258,6 @@ function CloseIngredientTag(CloseIng){
     AllRecipes.forEach(recette => DisplayRecipe(recette));
     ActualiserListTag();
 }
-function FilterWithRemoveTag(ArrayRecipes){
-    let FiltredRecipe = ArrayRecipes;
-
-    if(InputWord != null){//premiere reccherche avec inputword
-        console.log("-----filtrage avec inputword");
-        FiltredRecipe = FilterRecipeWithInputWord(ArrayRecipes, InputWord)
-    }
-    if(TagArrayIngredients.length !=0){
-        console.log("---- filtrage avec liste tag ingredients");
-       FiltredRecipe = FilterRecipeWithIngredientTag(FiltredRecipe, TagArrayIngredients);
-    } 
-    if(TagArrayAppareils.length != 0){
-        console.log("--- filtrage avec liste tag appareils");
-        FiltredRecipe = FilterRecipeWithAppareilTag(FiltredRecipe,TagArrayAppareils);
-    }
-    if(TagArrayUstensils.length != 0){
-        console.log("--- filtrage avec liste tag Ustensiles ");
-        FiltredRecipe = FilterRecipeWithUstensilsTag(FiltredRecipe, TagArrayUstensils);
-    }
-
-    return FiltredRecipe;
-}
 
 // Affichages des tags appareils
 function DisplayAppareilsTag(DataOfTagList, ListTag){
@@ -446,7 +424,7 @@ SearchInput.addEventListener('keyup',(e)=>{
 
     if(InputWord.length > 2) { // au moins 3 caractères 
        // AllRecipes = FilterRecipeWithInputWord(AllRecipes, InputWord);
-       AllRecipes = FilterWithRemoveTag(AllRecipes)
+       AllRecipes = FilterWithRemoveTag(recipes);
     }
     else {// tester s'il ya des tags sinon remettre tous les recettes affichés
         AllRecipes = recipes;
@@ -470,28 +448,60 @@ SearchInput.addEventListener('keyup',(e)=>{
     ActualiserListTag();
 })
 
+function FilterWithRemoveTag(ArrayRecipes){
+    let FiltredRecipe = ArrayRecipes;
+
+    if(InputWord != null){//premiere reccherche avec inputword
+        console.log("-----filtrage avec inputword");
+        FiltredRecipe = FilterRecipeWithInputWord(ArrayRecipes, InputWord)
+    }
+    if(TagArrayIngredients.length !=0){
+        console.log("---- filtrage avec liste tag ingredients");
+       FiltredRecipe = FilterRecipeWithIngredientTag(FiltredRecipe, TagArrayIngredients);
+    } 
+    if(TagArrayAppareils.length != 0){
+        console.log("--- filtrage avec liste tag appareils");
+        FiltredRecipe = FilterRecipeWithAppareilTag(FiltredRecipe,TagArrayAppareils);
+    }
+    if(TagArrayUstensils.length != 0){
+        console.log("--- filtrage avec liste tag Ustensiles ");
+        FiltredRecipe = FilterRecipeWithUstensilsTag(FiltredRecipe, TagArrayUstensils);
+    }
+
+    return FiltredRecipe;
+}
+
 function FilterRecipeWithInputWord(ArrayRecipes, KeyWord){
-    let FiltredRecipe =[];
+    let FiltredRecipe = [];
     let FilteredRecipeWithName =[];
-    let FilteredRecipeWithIngredient =[];
-    let FilteredRecipeWithDescription =[];
-
+   // let FilteredRecipeWithIngredient =[];
+   // let FilteredRecipeWithDescription =[];
+   // console.log(KeyWord);
     // filter les recettes avec le nom
-    FilteredRecipeWithName = ArrayRecipes.filter(ele => ele.name.toLowerCase().includes(KeyWord));
-    
-    recipes.forEach(recp => {
-    // rechercher dans les ingredients    
-        const IngredientsOneRecipe = recp.ingredients.map(ele => ele.ingredient.toLowerCase());
-        if(IngredientsOneRecipe.includes(KeyWord)){
-            FilteredRecipeWithIngredient.push(recp);
+    //FilteredRecipeWithName = ArrayRecipes.filter(ele => ele.name.toLowerCase().includes(KeyWord));
+    for(let i = 0; i<ArrayRecipes.length; i++){
+         console.log(ArrayRecipes[i]);
+         
+        if(ArrayRecipes[i].name.toLowerCase().includes(KeyWord)){
+            FilteredRecipeWithName.push(ArrayRecipes[i]);
         }
-    // rechercher dans la description 
-        if(recp.description.includes(KeyWord)){
-            FilteredRecipeWithDescription.push(recp);
-        }
-    })
+    }
 
-    FiltredRecipe = FilteredRecipeWithName.concat(FilteredRecipeWithIngredient).concat(FilteredRecipeWithDescription);
+
+//    // recipes.forEach(recp => {
+//     for(let i =0; i<recipes.length; i++){
+//     // rechercher dans les ingredients    
+//         const IngredientsOneRecipe = recipes[i].ingredients.map(ele => ele.ingredient.toLowerCase());
+//         if(IngredientsOneRecipe.includes(KeyWord)){
+//             FilteredRecipeWithIngredient.push(recipes[i]);
+//         }
+//     // rechercher dans la description 
+//         if(recipes[i].description.includes(KeyWord)){
+//             FilteredRecipeWithDescription.push(recipes[i]);
+//         }
+//     }
+
+    FiltredRecipe = FilteredRecipeWithName;//.concat(FilteredRecipeWithIngredient).concat(FilteredRecipeWithDescription);
 
     return [...new Set(FiltredRecipe)];
 }
@@ -510,12 +520,3 @@ function ActualiserListTag(){
     ListeTagAppareils.innerHTML="";
     DisplayAppareilsTag(AllAppareils, ListeTagAppareils);
 }
-
-// Ton array qui possède toutes les recettes
-// Une copie de ton array qui se rempli ou se vide en fonction des recherches
-// Tu met à jour ta copie a chaque recherche et tu l'affiche
-// Quand tu vide tous tes filtres, tu affiche le array original
-// Fonction qui filtre avec le champ de recherche
-// Fonction qui filtre avec le tag ingredient
-// Fonction qui filtre avec le tag ustensil
-// Fonction qui filtre avec le tag appareil
