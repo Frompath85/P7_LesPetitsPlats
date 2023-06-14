@@ -476,7 +476,7 @@ function FilterRecipeWithInputWord(ArrayRecipes, KeyWord){
     let FilteredRecipeWithIngredient =[];
     let FilteredRecipeWithDescription =[];
 
-    // filter les recettes avec le nom
+    // rechercher par nom
     FilteredRecipeWithName = ArrayRecipes.filter(ele => ele.name.toLowerCase().includes(KeyWord));
     
     recipes.forEach(recp => {
@@ -484,12 +484,10 @@ function FilterRecipeWithInputWord(ArrayRecipes, KeyWord){
         const IngredientsOneRecipe = recp.ingredients.map(ele => ele.ingredient.toLowerCase());
         if(IngredientsOneRecipe.includes(KeyWord)){
             FilteredRecipeWithIngredient.push(recp);
-        }
-    // rechercher dans la description 
-        if(recp.description.includes(KeyWord)){
-            FilteredRecipeWithDescription.push(recp);
-        }
+        }      
     })
+    // rechercher dans la description 
+    FilteredRecipeWithDescription = ArrayRecipes.filter(ele => ele.description.toLowerCase().includes(KeyWord))
 
     FiltredRecipe = FilteredRecipeWithName.concat(FilteredRecipeWithIngredient).concat(FilteredRecipeWithDescription);
 
@@ -511,11 +509,3 @@ function ActualiserListTag(){
     DisplayAppareilsTag(AllAppareils, ListeTagAppareils);
 }
 
-// Ton array qui possède toutes les recettes
-// Une copie de ton array qui se rempli ou se vide en fonction des recherches
-// Tu met à jour ta copie a chaque recherche et tu l'affiche
-// Quand tu vide tous tes filtres, tu affiche le array original
-// Fonction qui filtre avec le champ de recherche
-// Fonction qui filtre avec le tag ingredient
-// Fonction qui filtre avec le tag ustensil
-// Fonction qui filtre avec le tag appareil
