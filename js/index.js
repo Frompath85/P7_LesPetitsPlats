@@ -473,45 +473,33 @@ function FilterWithRemoveTag(ArrayRecipes){
 
 function FilterRecipeWithInputWord(ArrayRecipes, KeyWord){
     let FiltredRecipe = [];
-    let FilteredRecipeWithName =[];
-    let FilteredRecipeWithIngredient =[];
-   // let FilteredRecipeWithDescription =[];
-    console.log(KeyWord);
-   // console.log(ArrayRecipes);
-    // filter les recettes avec le nom
-    //FilteredRecipeWithName = ArrayRecipes.filter(ele => ele.name.toLowerCase().includes(KeyWord));
+    const FilteredRecipeWithName = [];
+    const FilteredRecipeWithIngredient = [];
+    const FilteredRecipeWithDescription = [];
+
     for(let i = 0; i<ArrayRecipes.length; i++){
-         console.log("recherche par nom");
+        // recherche dans le nom
         if(ArrayRecipes[i].name.toLowerCase().includes(KeyWord)){
-            FilteredRecipeWithName.push(ArrayRecipes[i]);
-            console.log(FilteredRecipeWithName);
+            FilteredRecipeWithName.push(ArrayRecipes[i]);  
         }
-    }
-    
-
- // recipes.forEach(recp => {
-   // for(let i = 0; i<ArrayRecipes.length; i++){
-        for(let i =0; i<ArrayRecipes.length; i++){
-    // rechercher dans les ingredients    
-        const IngredientsOneRecipe = ArrayRecipes[i].ingredients.map(ele => ele.ingredient.toLowerCase());
-        console.log("recherche par ingredient");
-        
-         for(let i =0; i<IngredientsOneRecipe.length; i++){
-             console.log(IngredientsOneRecipe[i]);
-            if(IngredientsOneRecipe[i].includes(KeyWord)){
-                FilteredRecipeWithIngredient.push(ArrayRecipes[i]);
-             console.log(FilteredRecipeWithIngredient);
-            }
+        //recherche dans les ingredients
+        const IngredientsOneRecipe = [];
+        const TabIng = ArrayRecipes[i].ingredients;
+        for(let k =0; k<TabIng.length; k++){
+            IngredientsOneRecipe.push(TabIng[k].ingredient);
         }
-    // rechercher dans la description 
-        // if(recipes[i].description.includes(KeyWord)){
-        //     FilteredRecipeWithDescription.push(recipes[i]);
-        // }
-  //  }
-    }
-//    
+      
+        for(let j = 0; j<IngredientsOneRecipe.length; j++){
+            if(IngredientsOneRecipe[j].includes(KeyWord))
+                FilteredRecipeWithIngredient.push(ArrayRecipes[i]);  
+        }
+        // rechercher dans la description 
+        if(ArrayRecipes[i].description.includes(KeyWord)){
+            FilteredRecipeWithDescription.push(ArrayRecipes[i]);
+        }
+    }  
 
-    FiltredRecipe = FilteredRecipeWithName.concat(FilteredRecipeWithIngredient);//.concat(FilteredRecipeWithDescription);
+    FiltredRecipe = FilteredRecipeWithName.concat(FilteredRecipeWithIngredient).concat(FilteredRecipeWithDescription);
 
     return [...new Set(FiltredRecipe)];
 }
