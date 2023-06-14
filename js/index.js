@@ -474,34 +474,44 @@ function FilterWithRemoveTag(ArrayRecipes){
 function FilterRecipeWithInputWord(ArrayRecipes, KeyWord){
     let FiltredRecipe = [];
     let FilteredRecipeWithName =[];
-   // let FilteredRecipeWithIngredient =[];
+    let FilteredRecipeWithIngredient =[];
    // let FilteredRecipeWithDescription =[];
-   // console.log(KeyWord);
+    console.log(KeyWord);
+   // console.log(ArrayRecipes);
     // filter les recettes avec le nom
     //FilteredRecipeWithName = ArrayRecipes.filter(ele => ele.name.toLowerCase().includes(KeyWord));
     for(let i = 0; i<ArrayRecipes.length; i++){
-         console.log(ArrayRecipes[i]);
-         
+         console.log("recherche par nom");
         if(ArrayRecipes[i].name.toLowerCase().includes(KeyWord)){
             FilteredRecipeWithName.push(ArrayRecipes[i]);
+            console.log(FilteredRecipeWithName);
         }
     }
+    
 
+ // recipes.forEach(recp => {
+   // for(let i = 0; i<ArrayRecipes.length; i++){
+        for(let i =0; i<ArrayRecipes.length; i++){
+    // rechercher dans les ingredients    
+        const IngredientsOneRecipe = ArrayRecipes[i].ingredients.map(ele => ele.ingredient.toLowerCase());
+        console.log("recherche par ingredient");
+        
+         for(let i =0; i<IngredientsOneRecipe.length; i++){
+             console.log(IngredientsOneRecipe[i]);
+            if(IngredientsOneRecipe[i].includes(KeyWord)){
+                FilteredRecipeWithIngredient.push(ArrayRecipes[i]);
+             console.log(FilteredRecipeWithIngredient);
+            }
+        }
+    // rechercher dans la description 
+        // if(recipes[i].description.includes(KeyWord)){
+        //     FilteredRecipeWithDescription.push(recipes[i]);
+        // }
+  //  }
+    }
+//    
 
-//    // recipes.forEach(recp => {
-//     for(let i =0; i<recipes.length; i++){
-//     // rechercher dans les ingredients    
-//         const IngredientsOneRecipe = recipes[i].ingredients.map(ele => ele.ingredient.toLowerCase());
-//         if(IngredientsOneRecipe.includes(KeyWord)){
-//             FilteredRecipeWithIngredient.push(recipes[i]);
-//         }
-//     // rechercher dans la description 
-//         if(recipes[i].description.includes(KeyWord)){
-//             FilteredRecipeWithDescription.push(recipes[i]);
-//         }
-//     }
-
-    FiltredRecipe = FilteredRecipeWithName;//.concat(FilteredRecipeWithIngredient).concat(FilteredRecipeWithDescription);
+    FiltredRecipe = FilteredRecipeWithName.concat(FilteredRecipeWithIngredient);//.concat(FilteredRecipeWithDescription);
 
     return [...new Set(FiltredRecipe)];
 }
