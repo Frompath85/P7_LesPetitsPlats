@@ -262,19 +262,19 @@ function FilterWithRemoveTag(ArrayRecipes){
     let FiltredRecipe = ArrayRecipes;
 
     if(InputWord != null){//premiere reccherche avec inputword
-        console.log("-----filtrage avec inputword");
+        //console.log("-----filtrage avec inputword");
         FiltredRecipe = FilterRecipeWithInputWord(ArrayRecipes, InputWord)
     }
     if(TagArrayIngredients.length !=0){
-        console.log("---- filtrage avec liste tag ingredients");
+       // console.log("---- filtrage avec liste tag ingredients");
        FiltredRecipe = FilterRecipeWithIngredientTag(FiltredRecipe, TagArrayIngredients);
     } 
     if(TagArrayAppareils.length != 0){
-        console.log("--- filtrage avec liste tag appareils");
+        //console.log("--- filtrage avec liste tag appareils");
         FiltredRecipe = FilterRecipeWithAppareilTag(FiltredRecipe,TagArrayAppareils);
     }
     if(TagArrayUstensils.length != 0){
-        console.log("--- filtrage avec liste tag Ustensiles ");
+       // console.log("--- filtrage avec liste tag Ustensiles ");
         FiltredRecipe = FilterRecipeWithUstensilsTag(FiltredRecipe, TagArrayUstensils);
     }
 
